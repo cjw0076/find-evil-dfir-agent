@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "name": "find_evil_evidence_ledger",
+  "description": "증거 중심 DFIR/incident 분석을 위한 최소 공개 스키마",
+  "records": {
+    "type": "object",
+    "required": [
+      "evidence_id",
+      "case_id",
+      "event_time_utc",
+      "event_type",
+      "source",
+      "summary",
+      "severity",
+      "owner",
+      "status",
+      "notes"
+    ],
+    "properties": {
+      "evidence_id": {
+        "type": "string",
+        "description": "증거 레코드 고유 ID (예: FEV-E1-20260606-001)"
+      },
+      "case_id": {
+        "type": "string",
+        "description": "사건/사례 식별자"
+      },
+      "event_time_utc": {
+        "type": "string",
+        "description": "UTC timestamp (YYYY-MM-DDTHH:MM:SSZ)"
+      },
+      "event_type": {
+        "type": "string",
+        "description": "ingestion | decode | alert | triage | containment | verification"
+      },
+      "source": {
+        "type": "string",
+        "description": "데이터 원천 (예: synthetic_syslog, mcp_feed)"
+      },
+      "summary": {
+        "type": "string",
+        "description": "증거 요약"
+      },
+      "severity": {
+        "type": "string",
+        "enum": ["low", "medium", "high", "critical"]
+      },
+      "owner": {
+        "type": "string",
+        "description": "조사 책임 주체"
+      },
+      "status": {
+        "type": "string",
+        "enum": ["new", "triaging", "mitigated", "verified", "closed"]
+      },
+      "notes": {
+        "type": "string",
+        "description": "판단 근거, 수동 확인 여부, 제약 조건"
+      },
+      "iocs": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Indicators of Compromise 후보 목록"
+      },
+      "recommendation": {
+        "type": "string",
+        "description": "권장 조치"
+      },
+      "evidence_pointer": {
+        "type": "string",
+        "description": "공개 가능한 증빙 경로(로그 경로/스크린샷 경로/파일명)"
+      }
+    }
+  },
+  "example_record": {
+    "evidence_id": "FEV-E1-20260606-001",
+    "case_id": "case-lab-01",
+    "event_time_utc": "2026-06-06T01:20:00Z",
+    "event_type": "alert",
+    "source": "synthetic_syslog",
+    "summary": "정상적으로 보고되지 않은 외부 IP에서 비정상 로그인 시도 다발",
+    "severity": "high",
+    "owner": "defender",
+    "status": "triaging",
+    "notes": "합성 데이터 기반 검증. 실제 시스템 연결 없음.",
+    "iocs": ["198.51.100.77", "usr_legacy_admin_reset"],
+    "recommendation": "세션 종료 + 계정 잠금 + MFA 점검",
+    "evidence_pointer": "find_evil_2026/docs/synthetic_trace.md"
+  }
+}

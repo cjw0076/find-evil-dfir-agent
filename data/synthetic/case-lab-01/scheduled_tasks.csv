@@ -1,0 +1,4 @@
+row,task_name,action,trigger,author,created_utc
+1,OneDriveSync,"C:\Users\acct.jlee\AppData\Roaming\svchost_helper.exe",every 10 minutes,WIN-ACCT-07\acct.jlee,2026-06-06T01:08:48Z
+2,GoogleUpdateTaskMachineCore,"C:\Program Files (x86)\Google\Update\GoogleUpdate.exe",daily,WIN-ACCT-07\SYSTEM,2025-03-14T08:00:00Z
+3,MicrosoftEdgeUpdateTaskMachineUA,"C:\Program Files (x86)\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe",hourly,WIN-ACCT-07\SYSTEM,2024-09-01T08:00:00Z

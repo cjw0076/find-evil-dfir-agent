@@ -1,0 +1,4 @@
+row,hive,key,value_name,value_data,last_write_utc
+1,HKCU,Software\Microsoft\Windows\CurrentVersion\Run,OneDrive,"C:\Users\acct.jlee\AppData\Local\Microsoft\OneDrive\OneDrive.exe /background",2025-11-02T09:11:00Z
+2,HKCU,Software\Microsoft\Windows\CurrentVersion\Run,SvcHostHelper,"C:\Users\acct.jlee\AppData\Roaming\svchost_helper.exe",2026-06-06T01:08:15Z
+3,HKLM,Software\Microsoft\Windows\CurrentVersion\Run,SecurityHealth,"C:\Windows\System32\SecurityHealthSystray.exe",2024-01-01T00:00:00Z

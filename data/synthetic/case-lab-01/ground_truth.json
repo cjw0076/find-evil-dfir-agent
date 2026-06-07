@@ -1,0 +1,24 @@
+{
+  "case_id": "case-lab-01",
+  "synthetic": true,
+  "narrative": "Phishing email delivered Invoice_June_2026.docm to acct.jlee on WIN-ACCT-07. The macro spawned an encoded PowerShell download cradle that pulled a second-stage payload (svchost_helper.exe) from C2 cdn-update-sync.example.net / 203.0.113.45. The implant established persistence via an HKCU Run key and a 10-minute scheduled task (masquerading as OneDriveSync), dumped LSASS via comsvcs.dll MiniDump for credential access, beaconed to C2, and began lateral movement to FILE-SRV-02 over SMB.",
+  "decoy": "An internet-sourced failed-logon burst from 198.51.100.77 against the local Administrator account looks like a brute-force intrusion vector but is unrelated benign scanner noise (no success, IP is rated benign in threat intel). A correct agent must NOT attribute the compromise to this and must self-correct.",
+  "expected_findings": [
+    {"id": "GT-1", "mitre": "T1566.001", "label": "Phishing attachment execution (macro-enabled doc)", "key_evidence": ["sysmon.evtx.jsonl:1", "mft_timeline.csv:1"]},
+    {"id": "GT-2", "mitre": "T1059.001", "label": "Encoded PowerShell download cradle", "key_evidence": ["sysmon.evtx.jsonl:2", "sysmon.evtx.jsonl:3", "powershell.evtx.jsonl:1", "powershell.evtx.jsonl:2"]},
+    {"id": "GT-3", "mitre": "T1071.001", "label": "C2 beaconing to known-bad host", "key_evidence": ["sysmon.evtx.jsonl:4", "netflow.csv:2", "threat_intel.csv:1", "threat_intel.csv:2"]},
+    {"id": "GT-4", "mitre": "T1547.001", "label": "Registry Run key persistence", "key_evidence": ["sysmon.evtx.jsonl:7", "registry_run.csv:2", "powershell.evtx.jsonl:3"]},
+    {"id": "GT-5", "mitre": "T1053.005", "label": "Scheduled task persistence (OneDriveSync decoy name)", "key_evidence": ["sysmon.evtx.jsonl:8", "scheduled_tasks.csv:1"]},
+    {"id": "GT-6", "mitre": "T1003.001", "label": "LSASS credential dump via comsvcs MiniDump", "key_evidence": ["sysmon.evtx.jsonl:9", "powershell.evtx.jsonl:4", "mft_timeline.csv:3"]},
+    {"id": "GT-7", "mitre": "T1021.002", "label": "Lateral movement to FILE-SRV-02 over SMB", "key_evidence": ["sysmon.evtx.jsonl:13", "netflow.csv:6", "security.evtx.jsonl:11"]}
+  ],
+  "expected_decoy_rejections": [
+    {"id": "GT-D1", "claim": "Internet brute-force against Administrator is the intrusion vector", "must_reject_because": "no successful logon (all 4625), source IP 198.51.100.77 rated benign in threat_intel.csv:4"}
+  ],
+  "iocs": [
+    {"indicator": "203.0.113.45", "type": "ipv4"},
+    {"indicator": "cdn-update-sync.example.net", "type": "domain"},
+    {"indicator": "00000000000000000000000000000000deadbeef", "type": "sha1"},
+    {"indicator": "C:\\Users\\acct.jlee\\AppData\\Roaming\\svchost_helper.exe", "type": "filepath"}
+  ]
+}

@@ -1,0 +1,5 @@
+row,path,sha1,first_seen_utc,signed
+1,C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe,0000000000000000000000000000000000000003,2024-01-01T00:00:00Z,microsoft
+2,C:\Users\acct.jlee\AppData\Roaming\svchost_helper.exe,00000000000000000000000000000000deadbeef,2026-06-06T01:07:44Z,unsigned
+3,C:\Windows\System32\schtasks.exe,0000000000000000000000000000000000000004,2024-01-01T00:00:00Z,microsoft
+4,C:\Windows\System32\rundll32.exe,0000000000000000000000000000000000000005,2024-01-01T00:00:00Z,microsoft

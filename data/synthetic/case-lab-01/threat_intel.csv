@@ -1,0 +1,6 @@
+row,indicator,type,verdict,source,first_reported_utc,note
+1,203.0.113.45,ipv4,malicious,offline_osint_feed,2026-05-30T00:00:00Z,Known Cobalt-style C2 staging host (synthetic)
+2,cdn-update-sync.example.net,domain,malicious,offline_osint_feed,2026-05-31T00:00:00Z,Typosquat masquerading as CDN (synthetic)
+3,00000000000000000000000000000000deadbeef,sha1,malicious,offline_osint_feed,2026-06-01T00:00:00Z,Dropper payload hash (synthetic)
+4,198.51.100.77,ipv4,benign,offline_osint_feed,2026-04-10T00:00:00Z,Corporate VPN egress / known scanner noise (synthetic)
+5,142.250.0.14,ipv4,benign,offline_osint_feed,2024-01-01T00:00:00Z,Google services (synthetic)

@@ -1,0 +1,7 @@
+row,time_utc,src_ip,src_host,dest_ip,dest_port,dest_host,bytes_out,bytes_in,process
+1,2026-06-06T01:00:30Z,10.20.0.55,WIN-ACCT-07,142.250.0.14,443,www.google.com,2200,18400,chrome.exe
+2,2026-06-06T01:07:31Z,10.20.0.55,WIN-ACCT-07,203.0.113.45,443,cdn-update-sync.example.net,860,540210,powershell.exe
+3,2026-06-06T01:11:20Z,10.20.0.55,WIN-ACCT-07,203.0.113.45,443,cdn-update-sync.example.net,1420,310,svchost_helper.exe
+4,2026-06-06T01:12:30Z,10.20.0.55,WIN-ACCT-07,203.0.113.45,443,cdn-update-sync.example.net,1380,290,svchost_helper.exe
+5,2026-06-06T01:13:40Z,10.20.0.55,WIN-ACCT-07,203.0.113.45,443,cdn-update-sync.example.net,1410,305,svchost_helper.exe
+6,2026-06-06T01:14:33Z,10.20.0.55,WIN-ACCT-07,10.20.0.41,445,FILE-SRV-02,4200,9100,svchost_helper.exe

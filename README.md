@@ -1,5 +1,8 @@
 # FIND EVIL! — Evidence-Linked DFIR Triage Agent
 
+> **▶ 60-second demo video:** [https://github.com/cjw0076/find-evil-dfir-agent/releases/download/demo-v1/find_evil_demo.mp4](https://github.com/cjw0076/find-evil-dfir-agent/releases/download/demo-v1/find_evil_demo.mp4)
+
+
 - status: working synthetic MVP (demo-ready)
 - official_url: https://findevil.devpost.com/
 - rules_url: https://findevil.devpost.com/rules

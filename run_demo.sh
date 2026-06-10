@@ -6,10 +6,15 @@ set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$HERE"
 
+export PYTHONPATH="$HERE/src${PYTHONPATH:+:$PYTHONPATH}"
+
+# `./run_demo.sh all`  -> run the eval harness across every case
+if [[ "${1:-}" == "all" ]]; then
+  exec python3 eval/run_eval.py
+fi
+
 CASE_DIR="${1:-data/synthetic/case-lab-01}"
 OUT_DIR="${2:-out}"
-
-export PYTHONPATH="$HERE/src${PYTHONPATH:+:$PYTHONPATH}"
 
 python3 -m find_evil --case-dir "$CASE_DIR" --out "$OUT_DIR"
 

@@ -3,56 +3,31 @@
 Every artifact row gets a stable, immutable evidence reference of the form
 ``<artifact_file>:<row>`` (e.g. ``sysmon.evtx.jsonl:9``). Findings cite these
 refs so any claim can be traced back to a specific line of a specific
-synthetic artifact — this is the provenance chain the judges care about.
+artifact — this is the provenance chain the judges care about.
 
-The loaders are deliberately "tools": typed, read-only, and they never mutate
-the evidence. Each tool call is recorded by the trace recorder so the run is
+The ``EvidenceStore`` is a thin, typed, read-only query surface over whatever
+``EvidenceSource`` produced the records (synthetic by default, live triage
+when ``FIND_EVIL_LIVE_DIR`` is set — see ``backends.py``). It never mutates the
+evidence, and every tool call is recorded by the trace recorder so the run is
 fully replayable.
 """
 
 from __future__ import annotations
 
-import csv
-import json
-import os
 from dataclasses import dataclass, field
 from typing import Any
 
+from .backends import ARTIFACTS, EvidenceRecord, EvidenceSource, make_source
 
-@dataclass(frozen=True)
-class EvidenceRecord:
-    """One immutable row of evidence with a stable provenance ref."""
-
-    ref: str  # "<file>:<row>"
-    artifact: str  # logical artifact name, e.g. "sysmon"
-    source_file: str  # filename within the case dir
-    row: int
-    data: dict[str, Any]
-
-    def get(self, key: str, default: Any = None) -> Any:
-        return self.data.get(key, default)
-
-
-# logical artifact name -> (filename, format)
-ARTIFACTS: dict[str, tuple[str, str]] = {
-    "security": ("security.evtx.jsonl", "jsonl"),
-    "sysmon": ("sysmon.evtx.jsonl", "jsonl"),
-    "powershell": ("powershell.evtx.jsonl", "jsonl"),
-    "prefetch": ("prefetch.csv", "csv"),
-    "amcache": ("amcache.csv", "csv"),
-    "registry_run": ("registry_run.csv", "csv"),
-    "scheduled_tasks": ("scheduled_tasks.csv", "csv"),
-    "netflow": ("netflow.csv", "csv"),
-    "mft": ("mft_timeline.csv", "csv"),
-    "threat_intel": ("threat_intel.csv", "csv"),
-}
+__all__ = ["EvidenceRecord", "EvidenceStore", "ARTIFACTS"]
 
 
 @dataclass
 class EvidenceStore:
-    """Loads and indexes all synthetic artifacts for a case (read-only)."""
+    """Loads and indexes all artifacts for a case via an EvidenceSource."""
 
     case_dir: str
+    source: EvidenceSource | None = None
     records: dict[str, list[EvidenceRecord]] = field(default_factory=dict)
     _trace: Any = None  # optional TraceRecorder
 
@@ -60,54 +35,16 @@ class EvidenceStore:
         self._trace = trace
 
     def load_all(self) -> None:
-        for name, (fname, fmt) in ARTIFACTS.items():
-            path = os.path.join(self.case_dir, fname)
-            if not os.path.exists(path):
-                self.records[name] = []
-                continue
-            if fmt == "jsonl":
-                self.records[name] = self._load_jsonl(name, fname, path)
-            else:
-                self.records[name] = self._load_csv(name, fname, path)
+        src = self.source or make_source(self.case_dir)
+        self.source = src
+        self.records = src.load()
+        # guarantee every known artifact key exists (empty list if absent)
+        for name in ARTIFACTS:
+            self.records.setdefault(name, [])
 
-    @staticmethod
-    def _load_jsonl(name: str, fname: str, path: str) -> list[EvidenceRecord]:
-        out: list[EvidenceRecord] = []
-        with open(path, encoding="utf-8") as fh:
-            for line in fh:
-                line = line.strip()
-                if not line:
-                    continue
-                obj = json.loads(line)
-                row = int(obj.get("row"))
-                out.append(
-                    EvidenceRecord(
-                        ref=f"{fname}:{row}",
-                        artifact=name,
-                        source_file=fname,
-                        row=row,
-                        data=obj,
-                    )
-                )
-        return out
-
-    @staticmethod
-    def _load_csv(name: str, fname: str, path: str) -> list[EvidenceRecord]:
-        out: list[EvidenceRecord] = []
-        with open(path, encoding="utf-8", newline="") as fh:
-            reader = csv.DictReader(fh)
-            for r in reader:
-                row = int(r.get("row"))
-                out.append(
-                    EvidenceRecord(
-                        ref=f"{fname}:{row}",
-                        artifact=name,
-                        source_file=fname,
-                        row=row,
-                        data=dict(r),
-                    )
-                )
-        return out
+    @property
+    def source_label(self) -> str:
+        return self.source.label if self.source else "uninitialised"
 
     # ---- typed read-only "tools" ------------------------------------------
 
@@ -161,6 +98,10 @@ class EvidenceStore:
                 result_refs=[],
             )
         return None
+
+    def ref_index(self) -> dict[str, EvidenceRecord]:
+        """All records keyed by their provenance ref (for citation resolution)."""
+        return {rec.ref: rec for recs in self.records.values() for rec in recs}
 
 
 def _describe_filters(filters: dict[str, Any]) -> dict[str, Any]:

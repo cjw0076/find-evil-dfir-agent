@@ -1,0 +1,4 @@
+row,time_utc,src_ip,src_host,dest_ip,dest_port,dest_host,bytes_out,bytes_in,process
+1,2026-06-15T22:08:56Z,10.50.0.11,web01,203.0.113.150,4444,attacker-vps.example.net,2210,940,bash
+2,2026-06-15T22:11:50Z,10.50.0.11,web01,203.0.113.150,80,attacker-vps.example.net,310,4210,curl
+3,2026-06-15T22:20:44Z,10.50.0.11,web01,10.50.0.21,22,db01,1820,940,ssh

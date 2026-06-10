@@ -1,0 +1,5 @@
+row,indicator,type,verdict,source,first_reported_utc,note
+1,203.0.113.150,ipv4,malicious,offline_osint_feed,2026-06-10T00:00:00Z,Webshell operator / reverse-shell catcher VPS (synthetic)
+2,attacker-vps.example.net,domain,malicious,offline_osint_feed,2026-06-10T00:00:00Z,Attacker command host (synthetic)
+3,198.51.100.66,ipv4,benign,offline_osint_feed,2026-06-01T00:00:00Z,Internet SSH brute-force scanner, no successful login (synthetic)
+4,66.249.66.1,ipv4,benign,offline_osint_feed,2020-01-01T00:00:00Z,Googlebot crawler - legitimate search indexing (synthetic)

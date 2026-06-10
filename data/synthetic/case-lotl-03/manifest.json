@@ -1,0 +1,36 @@
+{
+  "case_id": "case-lotl-03",
+  "title": "Living-off-the-land espionage: mshta -> certutil/regsvr32 -> WMI persistence + lateral, slow exfil (Windows)",
+  "platform": "windows",
+  "attack_class": "lotl_espionage",
+  "host": "RND-WS-11",
+  "alert": {
+    "trigger_time_utc": "2026-06-14T11:42:30Z",
+    "summary": "Threat-hunt alert: regsvr32.exe making periodic large-upload HTTPS connections to an external host, with no corresponding browser activity, on RND-WS-11.",
+    "source": "NetFlow anomaly + Sysmon process telemetry"
+  },
+  "decoy_hypothesis": {
+    "id": "H1",
+    "confidence": 0.5,
+    "statement": "H1: The alert is external brute-force reconnaissance from {bf_ip} against the local Administrator - an internet attacker is forcing their way in, and the IT helpdesk PsExec activity is the resulting hands-on-keyboard movement."
+  },
+  "corrected_hypothesis": {
+    "id": "H2",
+    "confidence": 0.93,
+    "statement": "H2: The intrusion is a living-off-the-land espionage actor on RND-WS-11. A malicious HTA (mshta) launched from Outlook used certutil to download+decode a payload and regsvr32 (squiblydoo) to execute it, established WMI event-subscription persistence, used wmic /node to move to RND-FS-03, and beacons low-and-slow to a known-bad host with periodic large uploads (data exfil). The internet brute-force is benign scanner noise and the helpdesk PsExec gpupdate is sanctioned admin tooling.",
+    "rationale_suffix": "All malicious execution chains from mshta->certutil->regsvr32 under s.kapoor with WMI persistence and exfil to a malicious host; the brute-force never succeeded and the helpdesk host is in the sanctioned asset inventory."
+  },
+  "refutation": {
+    "brute_force_ip_field": "source_ip",
+    "no_success_reason": "every logon from {bf_ip} is a 4625 failure - the external scanner never authenticated",
+    "benign_reason": "threat intel rates {bf_ip} benign ({ti_note})"
+  },
+  "containment": [
+    "Isolate RND-WS-11 and triage RND-FS-03 for the wmic-delivered payload.",
+    "Block egress to 203.0.113.88 / cdn-telemetry-sync.example.net at the edge firewall.",
+    "Remove the WMI __FilterToConsumerBinding 'WinSyncTrigger' and the winsync.dll payload.",
+    "Hunt fleet-wide for mshta launched by Office and regsvr32 /i:scrobj.dll (squiblydoo).",
+    "Reset s.kapoor credentials; review what regsvr32 uploaded (assume R&D data exfiltrated).",
+    "Baseline WMI permanent event subscriptions and restrict wmic /node between workstations."
+  ]
+}

@@ -1,0 +1,10 @@
+row,time_utc,host,user,path,action,size_bytes,process
+1,2026-06-12T14:01:05Z,FIN-WS-07,m.reyes,C:\Users\m.reyes\Documents\Q1_forecast.locky,encrypt,84210,svch0st.exe
+2,2026-06-12T14:01:06Z,FIN-WS-07,m.reyes,C:\Users\m.reyes\Documents\payroll_2026.locky,encrypt,120044,svch0st.exe
+3,2026-06-12T14:01:08Z,FIN-WS-07,m.reyes,C:\Users\m.reyes\Documents\budget_master.locky,encrypt,99210,svch0st.exe
+4,2026-06-12T14:01:10Z,FIN-WS-07,m.reyes,C:\Users\m.reyes\Documents\vendor_list.locky,encrypt,40210,svch0st.exe
+5,2026-06-12T14:01:12Z,FIN-WS-07,m.reyes,C:\Users\m.reyes\Documents\contracts\nda_acme.locky,encrypt,15533,svch0st.exe
+6,2026-06-12T14:01:14Z,FIN-WS-07,m.reyes,C:\Users\m.reyes\Documents\contracts\msa_globex.locky,encrypt,22890,svch0st.exe
+7,2026-06-12T14:01:16Z,FIN-WS-07,m.reyes,C:\Users\m.reyes\Documents\tax\w2_2025.locky,encrypt,33110,svch0st.exe
+8,2026-06-12T14:01:18Z,FIN-WS-07,m.reyes,C:\Users\m.reyes\Documents\tax\1099_2025.locky,encrypt,28740,svch0st.exe
+9,2026-06-12T14:01:30Z,FIN-WS-07,m.reyes,C:\Users\m.reyes\Documents\READ_ME_TO_DECRYPT.txt,create,1840,svch0st.exe

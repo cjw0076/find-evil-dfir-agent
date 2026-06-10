@@ -1,0 +1,36 @@
+{
+  "case_id": "case-insider-05",
+  "title": "Insider IP theft: share collection -> encrypted-archive staging -> USB exfil (Windows)",
+  "platform": "windows",
+  "attack_class": "insider_usb_exfil",
+  "host": "ENG-WS-22",
+  "alert": {
+    "trigger_time_utc": "2026-06-13T19:11:30Z",
+    "summary": "DLP alert: after-hours bulk copy of engineering design files to a removable USB drive on ENG-WS-22 by d.coleman.",
+    "source": "DLP removable-media monitor + Sysmon process telemetry"
+  },
+  "decoy_hypothesis": {
+    "id": "H1",
+    "confidence": 0.5,
+    "statement": "H1: This is an external intrusion - a brute-force from {bf_ip} broke in and the backup agent's outbound HTTPS to 52.95.110.10 is the attacker exfiltrating the design files to the cloud."
+  },
+  "corrected_hypothesis": {
+    "id": "H2",
+    "confidence": 0.93,
+    "statement": "H2: This is an insider data-theft, not an external breach. The engineer d.coleman, using valid credentials after hours, robocopied the IP_Designs share, packed it into a password-protected 7-Zip archive, and copied the archive plus raw CAD/firmware files to a personal SanDisk USB drive (E:). The brute-force never succeeded and the cloud-backup egress is the sanctioned corporate backup agent.",
+    "rationale_suffix": "All collection and exfil is by valid d.coleman credentials to a USB drive; the brute-force is benign scanner noise and 52.95.110.10 is the approved backup endpoint."
+  },
+  "refutation": {
+    "brute_force_ip_field": "source_ip",
+    "no_success_reason": "every logon from {bf_ip} is a 4625 failure - the external scanner never authenticated, so this is not an external breach",
+    "benign_reason": "threat intel rates {bf_ip} benign ({ti_note}); the cloud egress is the sanctioned backup agent"
+  },
+  "containment": [
+    "Preserve ENG-WS-22 and image the SanDisk USB (serial 4C530001110523117025) under legal hold.",
+    "Disable d.coleman's accounts and revoke access pending HR/legal investigation.",
+    "Block USB mass-storage write via GPO on engineering endpoints.",
+    "Quantify exfiltrated IP from the staging archive (designs.zip) and the raw files copied to E:.",
+    "Review ENG-FS-01 IP_Designs share access logs for the full scope of collection.",
+    "Do NOT chase the benign brute-force or the sanctioned backup egress - they are not the incident."
+  ]
+}

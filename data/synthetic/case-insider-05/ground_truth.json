@@ -1,0 +1,19 @@
+{
+  "case_id": "case-insider-05",
+  "synthetic": true,
+  "narrative": "After hours on ENG-WS-22, the engineer d.coleman logged in interactively (security.evtx.jsonl:1) and, using valid credentials, robocopied the entire \\\\ENG-FS-01\\IP_Designs share to a local staging folder (sysmon.evtx.jsonl:2, security.evtx.jsonl:5, netflow.csv:2). The collected data was packed into a password-protected 7-Zip archive designs.zip (sysmon.evtx.jsonl:3, filemod.csv:1). A SanDisk USB mass-storage drive was connected (usb.csv:1) and the archive plus raw CAD/firmware files were xcopied to E:\\ (sysmon.evtx.jsonl:5, filemod.csv:2-4). Blast radius: the ENG-FS-01 IP_Designs data and the d.coleman identity; data left the org on removable media.",
+  "decoy": "An internet scanner produced a failed-logon burst against the local Administrator from 203.0.113.240 (security.evtx.jsonl:2-4) and a sanctioned cloud-backup agent made outbound HTTPS to 52.95.110.10 (sysmon.evtx.jsonl:4, netflow.csv:1). Together they look like an external breach exfiltrating to the cloud, but the brute-force never succeeded (all 4625, rated benign threat_intel.csv:1) and 52.95.110.10 is the approved corporate backup endpoint (threat_intel.csv:2). A correct agent must self-correct to the insider-USB-exfil theory.",
+  "root_cause": "A trusted insider collected engineering IP from a file share, staged it in an encrypted archive, and exfiltrated it to a personal USB drive - there was no external compromise.",
+  "expected_findings": [
+    {"id": "GT-1", "mitre": "T1074.001", "label": "Local data staging (encrypted archive of collected files)", "key_evidence": ["sysmon.evtx.jsonl:3", "filemod.csv:1"]},
+    {"id": "GT-2", "mitre": "T1052.001", "label": "Data exfiltration over USB removable media", "key_evidence": ["usb.csv:1", "filemod.csv:2"]}
+  ],
+  "expected_decoy_rejections": [
+    {"id": "GT-D1", "claim": "An external brute-force broke in and exfiltrated to the cloud backup IP", "must_reject_because": "the brute-force is all 4625 failures rated benign (threat_intel.csv:1) and 52.95.110.10 is the sanctioned corporate backup endpoint (threat_intel.csv:2)"}
+  ],
+  "blast_radius": {"hosts": ["ENG-WS-22"], "identities": ["d.coleman"], "data_assets": ["ip_designs"]},
+  "iocs": [
+    {"indicator": "4C530001110523117025", "type": "usb_serial"},
+    {"indicator": "designs.zip", "type": "filename"}
+  ]
+}

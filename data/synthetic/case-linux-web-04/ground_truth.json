@@ -1,0 +1,21 @@
+{
+  "case_id": "case-linux-web-04",
+  "synthetic": true,
+  "narrative": "An attacker at 203.0.113.150 abused a path-traversal/upload flaw in upload.php (web_access.jsonl:2-3) to drop a PHP webshell at /var/www/html/uploads/media.php (filemod.csv:1) and executed commands through it (web_access.jsonl:4). They spawned a bash reverse shell to 203.0.113.150:4444 (linux_proc.jsonl:2, bash_history.csv:1, netflow.csv:1), downloaded an enumeration script (bash_history.csv:2), escalated privileges via a SUID-find sudo misconfig (linux_proc.jsonl:4, auth_log.jsonl:4), installed a root cron job /usr/local/sbin/.update for persistence (cron.csv:1, bash_history.csv:4), and pivoted over SSH to db01 with a stolen key (linux_proc.jsonl:5, auth_log.jsonl:5, netflow.csv:3). Blast radius: web01, db01, and the www-data -> root escalation.",
+  "decoy": "Just before the alert, an internet SSH brute-force from 198.51.100.66 hit root and admin (auth_log.jsonl:1-3). It looks like the entry vector but every attempt is a Failed password with no Accepted login, and the IP is rated benign (threat_intel.csv:3). Googlebot crawler traffic (web_access.jsonl:6-7) is also benign. A correct agent must self-correct from the SSH brute-force theory to the web-application compromise.",
+  "root_cause": "A vulnerable upload.php allowed a PHP webshell that gave command execution, leading to a reverse shell, privilege escalation, cron persistence, and an SSH pivot to db01.",
+  "expected_findings": [
+    {"id": "GT-1", "mitre": "T1505.003", "label": "Web shell deployed to web root", "key_evidence": ["filemod.csv:1", "web_access.jsonl:5"]},
+    {"id": "GT-2", "mitre": "T1059.004", "label": "Reverse shell (Unix shell over TCP)", "key_evidence": ["linux_proc.jsonl:2", "bash_history.csv:1"]},
+    {"id": "GT-3", "mitre": "T1053.003", "label": "Cron job persistence", "key_evidence": ["cron.csv:1", "bash_history.csv:4"]}
+  ],
+  "expected_decoy_rejections": [
+    {"id": "GT-D1", "claim": "The SSH brute-force from 198.51.100.66 is the entry vector", "must_reject_because": "all SSH attempts are Failed password with no Accepted login and the IP is rated benign (threat_intel.csv:3)"}
+  ],
+  "blast_radius": {"hosts": ["web01", "db01"], "identities": ["www-data", "root"], "data_assets": ["webapp", "db01"]},
+  "iocs": [
+    {"indicator": "203.0.113.150", "type": "ipv4"},
+    {"indicator": "attacker-vps.example.net", "type": "domain"},
+    {"indicator": "/var/www/html/uploads/media.php", "type": "filepath"}
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "case_id": "case-lab-01",
+  "title": "Phishing macro -> PowerShell cradle -> LSASS dump -> SMB pivot (Windows)",
+  "platform": "windows",
+  "attack_class": "targeted_intrusion",
+  "host": "WIN-ACCT-07",
+  "alert": {
+    "trigger_time_utc": "2026-06-06T01:03:02Z",
+    "summary": "SOC alert: burst of failed network logons (4625) against the local Administrator account on WIN-ACCT-07, followed by anomalous PowerShell on the host.",
+    "source": "security.evtx + EDR process telemetry"
+  },
+  "decoy_hypothesis": {
+    "id": "H1",
+    "confidence": 0.55,
+    "statement": "H1: The host was compromised by an external brute-force attack from {bf_ip} against the local Administrator account ({bf_count} failed logons)."
+  },
+  "corrected_hypothesis": {
+    "id": "H2",
+    "confidence": 0.92,
+    "statement": "H2: The intrusion vector was a phishing macro document opened by acct.jlee that spawned an encoded PowerShell download cradle - NOT the internet brute-force, which never succeeded.",
+    "rationale_suffix": "Meanwhile WINWORD.EXE spawned a shell, giving a real, corroborated local execution chain."
+  },
+  "refutation": {
+    "brute_force_ip_field": "source_ip",
+    "no_success_reason": "all logons from {bf_ip} are 4625 failures - zero successful logon",
+    "benign_reason": "threat intel rates {bf_ip} benign ({ti_note})"
+  },
+  "containment": [
+    "Isolate WIN-ACCT-07 from the network (host containment).",
+    "Block C2 203.0.113.45 and cdn-update-sync.example.net at egress.",
+    "Kill PowerShell tree + svchost_helper.exe; delete dropper and lsass.dmp.",
+    "Remove HKCU Run 'SvcHostHelper' and scheduled task 'OneDriveSync'.",
+    "Force-reset acct.jlee + any creds cached on host (assume LSASS dumped).",
+    "Triage FILE-SRV-02 for lateral-movement footholds."
+  ]
+}

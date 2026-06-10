@@ -1,0 +1,5 @@
+row,indicator,type,verdict,source,first_reported_utc,note
+1,203.0.113.88,ipv4,malicious,offline_osint_feed,2026-06-08T00:00:00Z,Espionage actor staging/exfil node, low-and-slow HTTPS (synthetic)
+2,cdn-telemetry-sync.example.net,domain,malicious,offline_osint_feed,2026-06-08T00:00:00Z,Typosquat C2 masquerading as telemetry CDN (synthetic)
+3,203.0.113.201,ipv4,benign,offline_osint_feed,2026-06-01T00:00:00Z,Internet background scanner, no successful access (synthetic)
+4,10.40.0.9,ipv4,benign,internal_asset_inventory,2026-01-01T00:00:00Z,Corp IT helpdesk jump host - sanctioned admin tooling (synthetic)

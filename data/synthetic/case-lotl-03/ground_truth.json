@@ -1,0 +1,22 @@
+{
+  "case_id": "case-lotl-03",
+  "synthetic": true,
+  "narrative": "On RND-WS-11, Outlook launched a malicious HTA via mshta.exe (sysmon.evtx.jsonl:1) which beaconed to cdn-telemetry-sync.example.net / 203.0.113.88 (sysmon.evtx.jsonl:2, threat_intel.csv:1-2). The actor used certutil to download and base64-decode a payload (sysmon.evtx.jsonl:3-4) then regsvr32 squiblydoo to execute winsync.dll (sysmon.evtx.jsonl:5). Persistence was a WMI event subscription re-launching the payload (wmi.csv:1). The actor moved laterally with wmic /node:RND-FS-03 process call create (sysmon.evtx.jsonl:6, netflow.csv:4) and exfiltrated R&D data low-and-slow via regsvr32 HTTPS uploads (sysmon.evtx.jsonl:7-8, netflow.csv:2-3, large bytes_out). Blast radius: RND-WS-11, RND-FS-03, the s.kapoor identity.",
+  "decoy": "An internet scanner produced a failed-logon burst against the local Administrator from 203.0.113.201 (security.evtx.jsonl:2-4) and the IT helpdesk ran PsExec gpupdate + a SYSVOL net use (sysmon.evtx.jsonl:9-10, security.evtx.jsonl:5). Both look like the intrusion but the brute-force never succeeded and is rated benign (threat_intel.csv:3), while the helpdesk jump host is a sanctioned asset (threat_intel.csv:4). A correct agent must self-correct away from the brute-force/helpdesk theory to the LOLBin chain.",
+  "root_cause": "A malicious HTA from Outlook chained certutil + regsvr32 (squiblydoo) to run an implant, persisted via WMI, moved to RND-FS-03 over WMI, and slowly exfiltrated data to a known-bad host.",
+  "expected_findings": [
+    {"id": "GT-0", "mitre": "T1566.001", "label": "Phishing-driven execution (Outlook spawned mshta HTA)", "key_evidence": ["sysmon.evtx.jsonl:1"]},
+    {"id": "GT-1", "mitre": "T1071.001", "label": "C2 beaconing to known-bad host", "key_evidence": ["sysmon.evtx.jsonl:2", "netflow.csv:1", "threat_intel.csv:1"]},
+    {"id": "GT-2", "mitre": "T1546.003", "label": "WMI event-subscription persistence", "key_evidence": ["wmi.csv:1"]},
+    {"id": "GT-3", "mitre": "T1047", "label": "WMI remote process creation (lateral movement)", "key_evidence": ["sysmon.evtx.jsonl:6", "netflow.csv:4"]}
+  ],
+  "expected_decoy_rejections": [
+    {"id": "GT-D1", "claim": "External brute-force from 203.0.113.201 (and helpdesk PsExec) is the intrusion", "must_reject_because": "the brute-force is all 4625 failures rated benign (threat_intel.csv:3) and the helpdesk host is a sanctioned asset (threat_intel.csv:4)"}
+  ],
+  "blast_radius": {"hosts": ["RND-WS-11", "RND-FS-03"], "identities": ["s.kapoor"], "data_assets": ["rnd_documents"]},
+  "iocs": [
+    {"indicator": "203.0.113.88", "type": "ipv4"},
+    {"indicator": "cdn-telemetry-sync.example.net", "type": "domain"},
+    {"indicator": "winsync.dll", "type": "filename"}
+  ]
+}

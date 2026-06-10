@@ -1,0 +1,6 @@
+row,time_utc,src_ip,src_host,dest_ip,dest_port,dest_host,bytes_out,bytes_in,process
+1,2026-06-14T09:14:40Z,10.40.0.31,RND-WS-11,203.0.113.88,443,cdn-telemetry-sync.example.net,1820,940,mshta.exe
+2,2026-06-14T11:42:00Z,10.40.0.31,RND-WS-11,203.0.113.88,443,cdn-telemetry-sync.example.net,2480400,820,regsvr32.exe
+3,2026-06-14T14:05:00Z,10.40.0.31,RND-WS-11,203.0.113.88,443,cdn-telemetry-sync.example.net,2210880,640,regsvr32.exe
+4,2026-06-14T09:18:44Z,10.40.0.31,RND-WS-11,10.40.0.53,135,RND-FS-03,640,210,WMIC.exe
+5,2026-06-14T08:41:10Z,10.40.0.9,CORP-HELPDESK,10.40.0.53,445,RND-FS-03,420,210,net.exe

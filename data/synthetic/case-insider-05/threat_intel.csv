@@ -1,0 +1,4 @@
+row,indicator,type,verdict,source,first_reported_utc,note
+1,203.0.113.240,ipv4,benign,offline_osint_feed,2026-06-01T00:00:00Z,Internet RDP/SMB scanner, no successful access (synthetic)
+2,52.95.110.10,ipv4,benign,internal_asset_inventory,2026-01-01T00:00:00Z,Sanctioned corporate cloud-backup endpoint - approved egress (synthetic)
+3,backup.corp-sanctioned.example.com,domain,benign,internal_asset_inventory,2026-01-01T00:00:00Z,Approved backup SaaS domain (synthetic)

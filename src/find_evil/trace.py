@@ -53,6 +53,10 @@ class TraceRecorder:
         self._emit("finding", {"evidence_id": evidence_id, "label": label,
                                "evidence_refs": evidence_refs})
 
+    def analysis(self, analyzer: str, summary: str, evidence_refs: list[str]) -> None:
+        self._emit("analysis", {"analyzer": analyzer, "summary": summary,
+                                "evidence_refs": evidence_refs})
+
     def note(self, text: str) -> None:
         self._emit("note", {"text": text})
 

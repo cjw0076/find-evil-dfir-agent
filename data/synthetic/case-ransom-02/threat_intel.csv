@@ -1,0 +1,6 @@
+row,indicator,type,verdict,source,first_reported_utc,note
+1,203.0.113.77,ipv4,malicious,offline_osint_feed,2026-06-05T00:00:00Z,Known Locky-family ransomware C2 / payment proxy (synthetic)
+2,download.eicar.org,domain,benign,offline_osint_feed,2010-01-01T00:00:00Z,EICAR standard antivirus test file host - benign test artifact (synthetic)
+3,locky-pay4.example.net,domain,malicious,offline_osint_feed,2026-06-06T00:00:00Z,Locky ransom-payment domain (synthetic)
+4,198.51.100.23,ipv4,benign,offline_osint_feed,2026-06-01T00:00:00Z,Internet background-noise scanner, no successful access (synthetic)
+5,00000000000000000000000000000000ba5eba11,sha1,malicious,offline_osint_feed,2026-06-07T00:00:00Z,Locky encryptor payload hash (synthetic)

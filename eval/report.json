@@ -1,0 +1,189 @@
+{
+  "schema": "find_evil_eval/1.0",
+  "synthetic": true,
+  "aggregate": {
+    "cases": 5,
+    "macro_recall": 1.0,
+    "macro_precision": 1.0,
+    "decoy_rejection_rate": 1.0,
+    "mean_steps_to_root_cause": 6.4,
+    "distinct_mitre_techniques": [
+      "T1003.001",
+      "T1021.002",
+      "T1047",
+      "T1052.001",
+      "T1053.003",
+      "T1053.005",
+      "T1059.001",
+      "T1059.004",
+      "T1071.001",
+      "T1074.001",
+      "T1486",
+      "T1490",
+      "T1505.003",
+      "T1546.003",
+      "T1547.001",
+      "T1566.001"
+    ],
+    "distinct_mitre_count": 16
+  },
+  "cases": [
+    {
+      "case_id": "case-insider-05",
+      "title": "Insider IP theft: share collection -> encrypted-archive staging -> USB exfil (Windows)",
+      "platform": "windows",
+      "attack_class": "insider_usb_exfil",
+      "recall": 1.0,
+      "precision": 1.0,
+      "decoy_rejected": true,
+      "expected_techniques": 2,
+      "detected_techniques": [
+        "T1052.001",
+        "T1074.001"
+      ],
+      "mitre_coverage": "2/2",
+      "matched": [
+        "GT-1:T1074.001",
+        "GT-2:T1052.001"
+      ],
+      "missed": [],
+      "steps_to_root": 5,
+      "total_tool_calls": 48,
+      "detections": 4,
+      "analyzers": 7,
+      "ledger_records": 8,
+      "trace_steps": 66,
+      "evidence_source": "synthetic"
+    },
+    {
+      "case_id": "case-lab-01",
+      "title": "Phishing macro -> PowerShell cradle -> LSASS dump -> SMB pivot (Windows)",
+      "platform": "windows",
+      "attack_class": "targeted_intrusion",
+      "recall": 1.0,
+      "precision": 1.0,
+      "decoy_rejected": true,
+      "expected_techniques": 7,
+      "detected_techniques": [
+        "T1003.001",
+        "T1021.002",
+        "T1053.005",
+        "T1059.001",
+        "T1071.001",
+        "T1547.001",
+        "T1566.001"
+      ],
+      "mitre_coverage": "7/7",
+      "matched": [
+        "GT-1:T1566.001",
+        "GT-2:T1059.001",
+        "GT-3:T1071.001",
+        "GT-4:T1547.001",
+        "GT-5:T1053.005",
+        "GT-6:T1003.001",
+        "GT-7:T1021.002"
+      ],
+      "missed": [],
+      "steps_to_root": 5,
+      "total_tool_calls": 67,
+      "detections": 7,
+      "analyzers": 7,
+      "ledger_records": 11,
+      "trace_steps": 88,
+      "evidence_source": "synthetic"
+    },
+    {
+      "case_id": "case-linux-web-04",
+      "title": "Web-server compromise: PHP webshell -> reverse shell -> cron persistence -> SSH pivot (Linux)",
+      "platform": "linux",
+      "attack_class": "webshell_pivot",
+      "recall": 1.0,
+      "precision": 1.0,
+      "decoy_rejected": true,
+      "expected_techniques": 3,
+      "detected_techniques": [
+        "T1053.003",
+        "T1059.004",
+        "T1505.003"
+      ],
+      "mitre_coverage": "3/3",
+      "matched": [
+        "GT-1:T1505.003",
+        "GT-2:T1059.004",
+        "GT-3:T1053.003"
+      ],
+      "missed": [],
+      "steps_to_root": 10,
+      "total_tool_calls": 50,
+      "detections": 3,
+      "analyzers": 7,
+      "ledger_records": 7,
+      "trace_steps": 67,
+      "evidence_source": "synthetic"
+    },
+    {
+      "case_id": "case-lotl-03",
+      "title": "Living-off-the-land espionage: mshta -> certutil/regsvr32 -> WMI persistence + lateral, slow exfil (Windows)",
+      "platform": "windows",
+      "attack_class": "lotl_espionage",
+      "recall": 1.0,
+      "precision": 1.0,
+      "decoy_rejected": true,
+      "expected_techniques": 4,
+      "detected_techniques": [
+        "T1047",
+        "T1071.001",
+        "T1546.003",
+        "T1566.001"
+      ],
+      "mitre_coverage": "4/4",
+      "matched": [
+        "GT-0:T1566.001",
+        "GT-1:T1071.001",
+        "GT-2:T1546.003",
+        "GT-3:T1047"
+      ],
+      "missed": [],
+      "steps_to_root": 5,
+      "total_tool_calls": 58,
+      "detections": 4,
+      "analyzers": 7,
+      "ledger_records": 8,
+      "trace_steps": 76,
+      "evidence_source": "synthetic"
+    },
+    {
+      "case_id": "case-ransom-02",
+      "title": "Ransomware operator: macro -> recovery inhibition -> mass encryption -> C2 (Windows)",
+      "platform": "windows",
+      "attack_class": "ransomware",
+      "recall": 1.0,
+      "precision": 1.0,
+      "decoy_rejected": true,
+      "expected_techniques": 5,
+      "detected_techniques": [
+        "T1059.001",
+        "T1071.001",
+        "T1486",
+        "T1490",
+        "T1566.001"
+      ],
+      "mitre_coverage": "5/5",
+      "matched": [
+        "GT-0:T1566.001",
+        "GT-1:T1059.001",
+        "GT-2:T1490",
+        "GT-3:T1486",
+        "GT-4:T1071.001"
+      ],
+      "missed": [],
+      "steps_to_root": 7,
+      "total_tool_calls": 58,
+      "detections": 5,
+      "analyzers": 7,
+      "ledger_records": 9,
+      "trace_steps": 77,
+      "evidence_source": "synthetic"
+    }
+  ]
+}

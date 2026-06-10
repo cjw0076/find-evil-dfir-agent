@@ -1,0 +1,3 @@
+row,time_utc,src_ip,src_host,dest_ip,dest_port,dest_host,bytes_out,bytes_in,process
+1,2026-06-13T19:05:00Z,10.60.0.22,ENG-WS-22,52.95.110.10,443,backup.corp-sanctioned.example.com,18200,940,bkpsvc.exe
+2,2026-06-13T18:51:10Z,10.60.0.22,ENG-WS-22,10.60.0.8,445,ENG-FS-01,1820,48210440,robocopy.exe

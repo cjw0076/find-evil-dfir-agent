@@ -1,0 +1,36 @@
+{
+  "case_id": "case-ransom-02",
+  "title": "Ransomware operator: macro -> recovery inhibition -> mass encryption -> C2 (Windows)",
+  "platform": "windows",
+  "attack_class": "ransomware",
+  "host": "FIN-WS-07",
+  "alert": {
+    "trigger_time_utc": "2026-06-12T14:02:30Z",
+    "summary": "EDR alert: burst of file-modify events rewriting documents to a .locky extension on FIN-WS-07, preceded by vssadmin shadow-copy deletion.",
+    "source": "EDR file-integrity monitor + Sysmon process telemetry"
+  },
+  "decoy_hypothesis": {
+    "id": "H1",
+    "confidence": 0.5,
+    "statement": "H1: The threat is the antivirus hit on IT-LAB-02 - a download of eicar.com from {bf_ip}-class noise - so the IT lab host is patient zero for the encryption."
+  },
+  "corrected_hypothesis": {
+    "id": "H2",
+    "confidence": 0.95,
+    "statement": "H2: The real incident is ransomware on FIN-WS-07 - a macro in Invoice_April.xlsm spawned an encoded PowerShell stager that deleted volume shadow copies and backup catalogs (vssadmin/wbadmin/bcdedit), then ran svch0st.exe to encrypt 8 finance documents to .locky and dropped a ransom note while beaconing to a Locky C2. The EICAR hit on IT-LAB-02 is unrelated benign AV-test noise.",
+    "rationale_suffix": "FIN-WS-07 shows recovery-inhibition immediately followed by a mass-encryption burst and a ransom note - a corroborated ransomware chain; IT-LAB-02 shows zero shadow deletion or .locky encryption."
+  },
+  "refutation": {
+    "brute_force_ip_field": "source_ip",
+    "no_success_reason": "IT-LAB-02 shows zero shadow-copy deletion or .locky encryption - it cannot be patient zero for the encryption on FIN-WS-07",
+    "benign_reason": "eicar.com is the benign standard EICAR antivirus test file ({ti_note})"
+  },
+  "containment": [
+    "Network-isolate FIN-WS-07 immediately while preserving volatile memory for forensics.",
+    "Block egress to the Locky C2 203.0.113.77 / locky-pay4.example.net at the edge firewall.",
+    "Restore finance documents from offsite/immutable backups - local shadow copies and backup catalog are deleted.",
+    "Hunt for svch0st.exe and the encoded PowerShell stager across all endpoints.",
+    "Reset credentials used on FIN-WS-07 and block Office macros from the internet via GPO.",
+    "Add correlation searches for (vssadmin/wbadmin delete) plus mass rename to known ransom extensions."
+  ]
+}

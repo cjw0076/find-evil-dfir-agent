@@ -25,6 +25,13 @@ crafted to tell a coherent attack story. Safe to publish.
 | `mft_timeline.csv` | $MFT / filesystem timeline | file create/modify times |
 | `threat_intel.csv` | OSINT/IOC feed (local, offline) | known-bad indicators |
 
+## Case manifest
+
+See `manifest.json`. The manifest drives the (case-agnostic) agent: the alert
+trigger, the decoy hypothesis, the corrected hypothesis, the refutation hints,
+and the containment playbook. The same agent triages every case in
+`data/synthetic/` from its manifest — nothing is hardcoded to this case.
+
 ## Ground truth (for accuracy scoring)
 
 See `ground_truth.json`. The real story is a phishing-delivered PowerShell

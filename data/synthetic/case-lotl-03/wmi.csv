@@ -1,0 +1,2 @@
+row,name,filter_name,consumer,command,created_utc,author
+1,WinSyncTrigger,__EventFilter:WinSyncFilter,CommandLineEventConsumer:WinSyncConsumer,"regsvr32.exe /s /u /i:C:\Users\s.kapoor\AppData\Local\Temp\winsync.dll scrobj.dll",2026-06-14T09:17:02Z,RND-WS-11\s.kapoor

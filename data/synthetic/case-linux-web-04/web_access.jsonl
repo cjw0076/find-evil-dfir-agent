@@ -1,0 +1,7 @@
+{"row": 1, "time_utc": "2026-06-15T22:03:11Z", "src_ip": "203.0.113.150", "method": "GET", "path": "/index.php?page=home", "status": 200, "ua": "Mozilla/5.0", "host": "shop.example.com"}
+{"row": 2, "time_utc": "2026-06-15T22:05:44Z", "src_ip": "203.0.113.150", "method": "GET", "path": "/upload.php?file=../../../../etc/passwd", "status": 200, "ua": "curl/8.4.0", "host": "shop.example.com"}
+{"row": 3, "time_utc": "2026-06-15T22:07:02Z", "src_ip": "203.0.113.150", "method": "POST", "path": "/upload.php", "status": 200, "ua": "curl/8.4.0", "host": "shop.example.com", "note": "multipart upload of media.php"}
+{"row": 4, "time_utc": "2026-06-15T22:07:40Z", "src_ip": "203.0.113.150", "method": "GET", "path": "/uploads/media.php?cmd=id", "status": 200, "ua": "curl/8.4.0", "host": "shop.example.com"}
+{"row": 5, "time_utc": "2026-06-15T22:08:55Z", "src_ip": "203.0.113.150", "method": "POST", "path": "/uploads/media.php", "status": 200, "ua": "curl/8.4.0", "host": "shop.example.com", "note": "cmd=bash reverse shell"}
+{"row": 6, "time_utc": "2026-06-15T18:30:00Z", "src_ip": "66.249.66.1", "method": "GET", "path": "/robots.txt", "status": 200, "ua": "Googlebot/2.1", "host": "shop.example.com"}
+{"row": 7, "time_utc": "2026-06-15T18:31:00Z", "src_ip": "66.249.66.1", "method": "GET", "path": "/sitemap.xml", "status": 200, "ua": "Googlebot/2.1", "host": "shop.example.com"}

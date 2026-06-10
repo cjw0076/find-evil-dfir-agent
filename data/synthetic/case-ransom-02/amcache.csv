@@ -1,0 +1,4 @@
+row,path,sha1,first_seen_utc,signed
+1,C:\Users\m.reyes\AppData\Roaming\svch0st.exe,00000000000000000000000000000000ba5eba11,2026-06-12T14:00:40Z,unsigned
+2,C:\Windows\System32\vssadmin.exe,0000000000000000000000000000000000000a03,2024-01-01T00:00:00Z,microsoft
+3,C:\Users\t.admin\Downloads\eicar.com,0000000000000000000000000000000044d88612,2026-06-12T13:30:05Z,unsigned

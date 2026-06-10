@@ -1,0 +1,5 @@
+row,time_utc,host,user,path,action,size_bytes,process
+1,2026-06-13T18:58:31Z,ENG-WS-22,d.coleman,C:\Users\d.coleman\Desktop\staging\designs.zip,create,48210440,7z.exe
+2,2026-06-13T19:11:02Z,ENG-WS-22,d.coleman,E:\designs.zip,create,48210440,xcopy.exe
+3,2026-06-13T19:11:40Z,ENG-WS-22,d.coleman,E:\turbofan_blade_v7.step,create,12044210,explorer.exe
+4,2026-06-13T19:12:05Z,ENG-WS-22,d.coleman,E:\source_firmware.tar,create,9920100,explorer.exe

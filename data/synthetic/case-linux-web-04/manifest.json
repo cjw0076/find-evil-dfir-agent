@@ -1,0 +1,36 @@
+{
+  "case_id": "case-linux-web-04",
+  "title": "Web-server compromise: PHP webshell -> reverse shell -> cron persistence -> SSH pivot (Linux)",
+  "platform": "linux",
+  "attack_class": "webshell_pivot",
+  "host": "web01",
+  "alert": {
+    "trigger_time_utc": "2026-06-15T22:09:00Z",
+    "summary": "IDS alert: outbound reverse-shell connection (bash to /dev/tcp/...:4444) from the web01 php-fpm worker to an external host.",
+    "source": "IDS netflow + auditd process telemetry"
+  },
+  "decoy_hypothesis": {
+    "id": "H1",
+    "confidence": 0.5,
+    "statement": "H1: web01 was compromised by the SSH brute-force from {bf_ip} that hit root and admin just before the alert - the attacker guessed an SSH password and logged in."
+  },
+  "corrected_hypothesis": {
+    "id": "H2",
+    "confidence": 0.93,
+    "statement": "H2: The compromise is a web-application attack: a path-traversal/upload flaw in upload.php let the attacker drop a PHP webshell (uploads/media.php), execute commands through it, spawn a bash reverse shell to 203.0.113.150:4444, escalate via a SUID-find sudo misconfig, install a root cron job for persistence, and pivot over SSH to db01 - the SSH brute-force never succeeded.",
+    "rationale_suffix": "The webshell write is immediately followed by command-exec GETs and a reverse shell from www-data; the SSH brute-force shows only failed passwords and is rated benign."
+  },
+  "refutation": {
+    "brute_force_ip_field": "source_ip",
+    "no_success_reason": "every SSH attempt from {bf_ip} is a Failed password - there is no Accepted login from that IP",
+    "benign_reason": "threat intel rates {bf_ip} benign ({ti_note})"
+  },
+  "containment": [
+    "Take web01 out of the load balancer and preserve a disk + memory image.",
+    "Remove the webshell /var/www/html/uploads/media.php and audit the web root for additional implants.",
+    "Block egress to 203.0.113.150 / attacker-vps.example.net and the :4444 reverse-shell callback.",
+    "Remove the root cron entry /usr/local/sbin/.update and the staged /tmp/.x enumeration scripts.",
+    "Patch the upload.php path-traversal/upload flaw and fix the SUID-find sudo rule for www-data.",
+    "Rotate the /root/.ssh/id_ed25519 key used to pivot to db01 and triage db01 for follow-on access."
+  ]
+}

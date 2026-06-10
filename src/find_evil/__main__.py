@@ -80,6 +80,10 @@ def run_demo(case_dir: str, out_dir: str) -> int:
             for line in rec["recommendation"].split("; "):
                 print(c("ok", f"  - {line}"))
 
+    _rule("FORENSIC ANALYZERS (breadth-of-analysis, evidence-cited)")
+    for name, res in agent.analyzer_results.items():
+        print(c("warn", f"  [{name}] {res.summary}"))
+
     _rule("ACCURACY SELF-CHECK (vs synthetic ground truth)")
     acc = summary["accuracy"]
     if acc.get("scored"):

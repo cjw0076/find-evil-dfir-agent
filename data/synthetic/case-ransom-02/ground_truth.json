@@ -1,0 +1,24 @@
+{
+  "case_id": "case-ransom-02",
+  "synthetic": true,
+  "narrative": "A macro-laden Invoice_April.xlsm opened by m.reyes on FIN-WS-07 spawned an encoded PowerShell stager (sysmon.evtx.jsonl:1-2, powershell.evtx.jsonl:1). The stager inhibited recovery by deleting volume shadow copies and backup catalogs via vssadmin/wbadmin/bcdedit (sysmon.evtx.jsonl:4-6), then downloaded and ran svch0st.exe to encrypt 8 finance documents to a .locky extension (filemod.csv:1-8) and dropped READ_ME_TO_DECRYPT.txt (filemod.csv:9). Throughout, FIN-WS-07 beaconed to a known Locky C2 at 203.0.113.77 / locky-pay4.example.net (sysmon.evtx.jsonl:3,9; netflow.csv:1-3). Blast radius: FIN-WS-07, the m.reyes identity, and the finance documents.",
+  "decoy": "An EICAR antivirus test file (eicar.com) was downloaded via certutil on IT-LAB-02 (sysmon.evtx.jsonl:10) and lit up AV dashboards, plus a benign scanner produced failed logons (security.evtx.jsonl:2-4). It looks like patient zero but eicar.com is the standard benign EICAR test artifact (threat_intel.csv:2) and IT-LAB-02 shows zero shadow-copy deletion or .locky encryption. A correct agent must NOT attribute the ransomware to the EICAR host and must self-correct to FIN-WS-07.",
+  "root_cause": "A malicious Office macro spawned a PowerShell stager that deleted shadow copies and encrypted finance documents on FIN-WS-07, beaconing to a Locky C2.",
+  "expected_findings": [
+    {"id": "GT-0", "mitre": "T1566.001", "label": "Phishing attachment execution (Excel macro spawned PowerShell)", "key_evidence": ["sysmon.evtx.jsonl:1", "sysmon.evtx.jsonl:2"]},
+    {"id": "GT-1", "mitre": "T1059.001", "label": "Encoded PowerShell download cradle", "key_evidence": ["sysmon.evtx.jsonl:2", "powershell.evtx.jsonl:1"]},
+    {"id": "GT-2", "mitre": "T1490", "label": "Inhibit system recovery (shadow-copy / backup deletion)", "key_evidence": ["sysmon.evtx.jsonl:4", "sysmon.evtx.jsonl:5"]},
+    {"id": "GT-3", "mitre": "T1486", "label": "Data encrypted for impact (mass file encryption)", "key_evidence": ["filemod.csv:1", "filemod.csv:9"]},
+    {"id": "GT-4", "mitre": "T1071.001", "label": "C2 beaconing to known Locky host", "key_evidence": ["sysmon.evtx.jsonl:3", "netflow.csv:1", "threat_intel.csv:3"]}
+  ],
+  "expected_decoy_rejections": [
+    {"id": "GT-D1", "claim": "The EICAR antivirus hit on IT-LAB-02 is patient zero for the ransomware", "must_reject_because": "eicar.com is the benign standard AV test file (threat_intel.csv:2) and IT-LAB-02 has zero shadow-copy deletion or .locky encryption"}
+  ],
+  "blast_radius": {"hosts": ["FIN-WS-07"], "identities": ["m.reyes"], "data_assets": ["finance_documents"]},
+  "iocs": [
+    {"indicator": "203.0.113.77", "type": "ipv4"},
+    {"indicator": "locky-pay4.example.net", "type": "domain"},
+    {"indicator": "svch0st.exe", "type": "filename"},
+    {"indicator": "READ_ME_TO_DECRYPT.txt", "type": "filename"}
+  ]
+}

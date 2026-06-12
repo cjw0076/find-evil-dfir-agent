@@ -84,3 +84,18 @@ PYTHONPATH=src python3 -m pytest tests/ -q        # 34 tests
 - **Tagline**: An autonomous DFIR triage agent that triages Windows & Linux intrusions, cites the exact evidence row for every finding, and self-corrects past planted decoys — 1.0/1.0 recall/precision, 100% decoy rejection across 5 cases.
 - **Tags**: dfir, incident-response, forensics, mitre-attack, evidence-provenance, self-correction, security, python
 - **Built with**: python, fastapi, mitre-attack, sysmon, evtx
+
+## Required components checklist
+
+- Code repository: https://github.com/cjw0076/find-evil-dfir-agent
+- Demo video: https://github.com/cjw0076/find-evil-dfir-agent/releases/download/demo-v1/find_evil_demo.mp4
+- Architecture diagram: `architecture_diagram.md`
+- Written project description: README + this Devpost story
+- Dataset documentation: `data/synthetic/` and case table in README
+- Accuracy report: `eval/report.json`
+- Try-it-out instructions: README Quick Start
+- Agent execution logs: `out/trace.json` and `out/ledger.json`
+
+Token usage note: the submitted agent is deterministic and does not call an LLM
+at runtime, so there are no runtime LLM tokens to report. The trace records each
+tool execution with timestamps and evidence refs.

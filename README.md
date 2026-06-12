@@ -10,6 +10,21 @@
 - domain: cybersecurity / autonomous incident response (DFIR)
 - license: MIT (see `LICENSE`)
 
+## Devpost required components
+
+All eight FIND EVIL! required submission components are present:
+
+| # | Required component | Where judges can verify it |
+|---|---|---|
+| 1 | Public open-source repository | This GitHub repo, MIT license in `LICENSE` |
+| 2 | Demo video under 5 minutes | [`find_evil_demo.mp4`](https://github.com/cjw0076/find-evil-dfir-agent/releases/download/demo-v1/find_evil_demo.mp4), live terminal screencast with self-correction |
+| 3 | Architecture diagram | [`architecture_diagram.md`](architecture_diagram.md) |
+| 4 | Written project description | This README and [`docs/devpost_submission.md`](docs/devpost_submission.md) |
+| 5 | Dataset documentation | [`data/synthetic/`](data/synthetic/) case library and the case table below |
+| 6 | Accuracy report | [`eval/report.json`](eval/report.json) plus the evaluation table below |
+| 7 | Try-it-out instructions | [Quick start](#quick-start-stdlib-python-only-for-the-core) |
+| 8 | Agent execution logs | [`out/trace.json`](out/trace.json) and [`out/ledger.json`](out/ledger.json) |
+
 ## What this is
 
 An **autonomous DFIR triage agent** that ingests forensic artifacts, reasons
@@ -174,6 +189,5 @@ Records conform to `docs/agent_evidence_ledger_schema.json`. Each finding adds
   web console, eval harness (macro recall = precision = 1.0, 100% decoy
   rejection, 16 distinct MITRE techniques), live-forensics adapter. Full test
   suite green.
-- Founder-only (NOT done by the build agent): register on Devpost, publish the
-  public repo, record the demo video, attach a real triage collection if/when
-  access is granted.
+- Public repo and demo video are published. Remaining external action is
+  Devpost form finalization.

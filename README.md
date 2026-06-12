@@ -1,5 +1,7 @@
 # FIND EVIL! — Evidence-Linked DFIR Triage Agent
 
+> **▶ Demo video:** [find_evil_demo.mp4](https://github.com/cjw0076/find-evil-dfir-agent/releases/download/demo-v1/find_evil_demo.mp4) — terminal triage walkthrough (hypothesis → contradiction → self-correction → evidence-linked findings).
+
 - status: prize-caliber build (5-case library, web UI, eval harness, live-ready)
 - official_url: https://findevil.devpost.com/
 - rules_url: https://findevil.devpost.com/rules
